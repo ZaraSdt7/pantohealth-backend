@@ -21,4 +21,4 @@ async function bootstrap() {
     console.log('IoT Producer is running on port 3001');
   });
 }
-  bootstrap();
+void bootstrap();

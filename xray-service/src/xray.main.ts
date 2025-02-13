@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
-import { XrayModule } from './xray.module';
+import { XrayModule } from './xray-service.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(XrayModule);
@@ -24,4 +24,4 @@ async function bootstrap() {
     console.log('Xray Service is running on port 3000');
   });
 }
- bootstrap();
+void bootstrap();
