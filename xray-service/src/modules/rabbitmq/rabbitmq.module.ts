@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import rabbitMQConfig from '../../config/rabbitmq.config';
 import { RabbitMQService } from './rabbitmq.service';
 import { RabbitMQConsumer } from './rabbitmq.consumer';
+import { XrayModule } from '../xray/xray.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { RabbitMQConsumer } from './rabbitmq.consumer';
         }),
       },
     ]),
+    XrayModule,
   ],
   providers: [RabbitMQService, RabbitMQConsumer],
   exports: [RabbitMQService],

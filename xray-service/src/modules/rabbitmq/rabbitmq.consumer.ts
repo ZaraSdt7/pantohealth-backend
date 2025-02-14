@@ -1,15 +1,19 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Ctx, EventPattern, Payload, RmqContext } from '@nestjs/microservices';
+import { XrayProccessor } from '../xray/xray.processor';
 
 @Injectable()
 export class RabbitMQConsumer {
-  constructor(private readonly logger = new Logger(RabbitMQConsumer.name)) {}
-
+  private readonly logger = new Logger(RabbitMQConsumer.name);
+  constructor(private readonly xrayProcessor: XrayProccessor) {}
   @EventPattern('x-ray-queue')
-  handleMessage(@Payload() data: any, @Ctx() contex: RmqContext) {
+  async handleMessage(@Payload() data: any, @Ctx() contex: RmqContext) {
+    this.logger.log(`Received X-ray data: ${JSON.stringify(data)}`);
     try {
-      this.logger.log(`Received X-ray data: ${JSON.stringify(data)}`);
       // Here we can send the data to the Xray Service for processing and storage
+      await this.xrayProcessor.processXrayData(data);
+
+      // Acknowledge the message to the RabbitMQ queue
       const channel = contex.getChannelRef() as {
         ack: (message: string) => void;
       };
