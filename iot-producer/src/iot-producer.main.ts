@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { RabbitMQProducer } from './modules/rabbitmq/rabbitmq.producer';
 import { IotProducerModule } from './iot-producer.module';
+import { setupSwagger } from './config/swagger/iot-swagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(IotProducerModule);
@@ -11,6 +12,12 @@ async function bootstrap() {
     `Connected to RabbitMQ: ${configService.get<string>('rabbitmq.uri')}`,
   );
 
+  //setup the swagger
+  setupSwagger(
+    app,
+    'IoT Producer API',
+    'API documentation for IoT data simulator',
+  );
   // Start sending simulated X-ray messages
   const producer = app.get<RabbitMQProducer>(RabbitMQProducer);
   setInterval(() => {

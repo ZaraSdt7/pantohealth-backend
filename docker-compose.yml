@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  xray-service:
+    build:
+      context: ./xray-service
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./xray-service/.env
+    depends_on:
+      - mongodb
+      - rabbitmq
+    restart: always
+
+  iot-producer:
+    build:
+      context: ./iot-producer
+      dockerfile: Dockerfile
+    ports:
+      - '3001:3001'
+    env_file:
+      - ./iot-producer/.env
+    depends_on:
+      - rabbitmq
+    restart: always
+
+  mongodb:
+    image: mongo:5.0
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'      # AMQP Protocol Port
+      - '15672:15672'    # Management Dashboard
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    restart: always
+
+volumes:
+  mongo-data:
+    driver: local

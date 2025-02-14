@@ -3,11 +3,17 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 import { XrayServiceModule } from './xray-service.module';
 import { AllExceptionsFilter } from './modules/common/exceptions.filter';
+import { setupSwagger } from './config/swagger/xray-swagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(XrayServiceModule);
 
   const configService = app.get(ConfigService);
+  setupSwagger(
+    app,
+    'Xray Service API',
+    'API documentation for X-ray data management and signal analysis',
+  );
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
