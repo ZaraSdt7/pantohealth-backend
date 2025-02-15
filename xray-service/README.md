@@ -23,9 +23,9 @@ The Xray Service is responsible for **receiving, processing, and storing X-ray d
 
 ## 🔧 Installation and Setup
 ```bash
-# Clone the repository
+
 git clone https://github.com/ZaraSdt7/pantohealth-backend
 cd xray-service
 
-# Install dependencies
+
 npm install
