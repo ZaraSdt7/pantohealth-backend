@@ -11,7 +11,8 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:xray": "node dist/xray-service/src/main",
+    "start:iot": "node dist/iot-producer/src/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -84,3 +85,4 @@
     "testEnvironment": "node"
   }
 }
+

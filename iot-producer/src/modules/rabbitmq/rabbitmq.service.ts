@@ -5,6 +5,7 @@ import {
   Transport,
 } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class RabbitMQService implements OnModuleInit {
@@ -21,16 +22,18 @@ export class RabbitMQService implements OnModuleInit {
         },
         urls: [this.configService.get<string>('rabbitmq.uri')],
         queue: this.configService.get<string>('rabbitmq.queue'),
-        queueOptions: this.configService.get('rabbitmq.queueOptions'),
+        queueOptions: this.configService.get('rabbitmq.queueOptions') as {
+          durable: boolean;
+        },
       },
     });
     this.logger.log('Connected to RabbitMQ');
   }
 
-  sendMessage(pattern: string, message: any) {
+  sendMessage(pattern: string, message: any): Observable<any> {
     this.logger.log(
       `Sending message to ${pattern}: ${JSON.stringify(message)}`,
     );
-    return this.client.emit(pattern, message);
+    return this.client.send(pattern, message);
   }
 }

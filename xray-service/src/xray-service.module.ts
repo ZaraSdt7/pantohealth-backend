@@ -11,13 +11,16 @@ import { MongooseModule } from '@nestjs/mongoose';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [rabbitmqConfig, databaseConfig],
+      envFilePath: '.env',
+      load: [databaseConfig, rabbitmqConfig],
     }),
 
     MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('database.uri'),
+        uri:
+          configService.get<string>('database.uri') ??
+          'mongodb://127.0.0.1:27017/xray-db',
       }),
     }),
 

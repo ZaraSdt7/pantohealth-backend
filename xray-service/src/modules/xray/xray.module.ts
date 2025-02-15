@@ -11,6 +11,6 @@ import { XrayService } from './xray.service';
   ],
   controllers: [XrayController],
   providers: [XrayService, XrayProccessor],
-  exports: [XrayService],
+  exports: [XrayService, XrayProccessor],
 })
 export class XrayModule {}

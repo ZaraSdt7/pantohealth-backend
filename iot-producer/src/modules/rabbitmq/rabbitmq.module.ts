@@ -3,7 +3,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import rabbitMQConfig from '../../config/rabbitmq.config';
 import { RabbitMQService } from './rabbitmq.service';
-import { RabbitMQConsumer } from '../../../../xray-service/src/modules/rabbitmq/rabbitmq.consumer';
+import { RabbitMQProducer } from './rabbitmq.producer';
+import { SimulatorModule } from '../simular/simulator.module';
+import { DataGenerator } from './data-generator-rabbitmq';
 
 @Module({
   imports: [
@@ -26,8 +28,9 @@ import { RabbitMQConsumer } from '../../../../xray-service/src/modules/rabbitmq/
         }),
       },
     ]),
+    SimulatorModule,
   ],
-  providers: [RabbitMQService, RabbitMQConsumer],
+  providers: [RabbitMQService, RabbitMQProducer, DataGenerator],
   exports: [RabbitMQService],
 })
 export class RabbitMQModule {}
