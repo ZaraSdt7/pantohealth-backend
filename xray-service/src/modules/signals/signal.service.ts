@@ -25,6 +25,7 @@ export class SingalService {
         deviceId,
         time: { $gte: from, $lt: to }, //Filter data by time
       };
+
       //If fields are sent, we will only return those specific fields in the response.
       const options = fields && fields.length > 0 ? fields.join(' ') : '';
       const signal = await this.xrayModel.find(query, options).exec();

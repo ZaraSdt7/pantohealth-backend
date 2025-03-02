@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "auto-test": "auto-generator-test generate --services",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -32,12 +33,14 @@
     "@typescript-eslint/parser": "^8.24.0",
     "amqp-connection-manager": "^4.1.14",
     "amqplib": "^0.10.5",
+    "auto-generator-test": "^1.1.4",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "mongoose": "^8.10.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.1",
+    "update": "^0.7.4",
     "uuid": "^11.0.5"
   },
   "devDependencies": {
@@ -85,4 +88,3 @@
     "testEnvironment": "node"
   }
 }
-
